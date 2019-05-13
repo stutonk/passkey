@@ -1,0 +1,26 @@
+.TH passkey 1 "13 May 2019" "version 1.0.0" "USER COMMANDS"
+.SH NAME
+passkey \- generate a cryptographic key from a password
+.SH SYNOPSIS
+.B passkey
+[\-h, \-v] [\-b] [\-p password]
+.SH DESCRIPTION
+passkey is a simple utility for generating cryptographic keys from passwords
+using the Argon2 algorithm. Keys are 64 hexadecimal characters (32 bytes 
+when using binary output) long and are appended with the 256 character 
+(128-byte) salt used to generate them.
+.SH OPTIONS
+.TP
+\-b, \-\-binary
+output in binary mode
+.TP
+\-h, \-\-help
+display help and exit
+.TP
+\-p, \-\-password
+specify the password as an argument
+.TP
+\-v, \-\-version
+output version information and exit
+.SH AUTHOR
+Joseph Eib (github.com/stutonk)
