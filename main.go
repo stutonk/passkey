@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 
+	"github.com/spf13/pflag"
 	flag "github.com/spf13/pflag"
 	"github.com/stutonk/boxutil"
 )
@@ -14,19 +16,19 @@ import (
 const (
 	errFmt   = "%v: fatal; %v\n"
 	saltLen  = 128
-	usageFmt = `usage: %v [-h, -v] [-b] [-p password]
-If -p is not given, read from STDIN
+	usageFmt = `usage: %v [-h, -v] [-b] [-s salt] [passphrase]
+If no passphrase given, read from STDIN
 Options are:
 `
 	verFmt  = "%v version %v\n"
-	version = "1.0.0"
+	version = "1.1.0"
 )
 
 var (
 	appName  = os.Args[0]
 	binFlag  bool
 	helpFlag bool
-	passFlag setString
+	saltFlag setString
 	verFlag  bool
 )
 
@@ -71,10 +73,10 @@ func init() {
 		"display this help and exit",
 	)
 	flag.VarP(
-		&passFlag,
-		"password",
-		"p",
-		"specify the password as an argument",
+		&saltFlag,
+		"salt",
+		"s",
+		"provide salt as a hexidecimal string",
 	)
 	flag.BoolVarP(
 		&verFlag,
@@ -105,19 +107,26 @@ func main() {
 	var (
 		err   error
 		input []byte
+		salt  []byte
 	)
-	if passFlag.set {
-		input = []byte(passFlag.value)
+	if len(pflag.Args()) > 0 {
+		input = []byte(strings.Join(pflag.Args(), " "))
 	} else {
 		input, err = ioutil.ReadAll(os.Stdin)
 		if err != nil {
 			panic(err)
 		}
 	}
-
-	salt := make([]byte, saltLen)
-	if _, err := rand.Read(salt); err != nil {
-		panic(err)
+	if saltFlag.set {
+		salt, err = hex.DecodeString(saltFlag.value)
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		salt = make([]byte, saltLen)
+		if _, err := rand.Read(salt); err != nil {
+			panic(err)
+		}
 	}
 
 	output := append((*boxutil.Passkey(input, salt))[:], salt...)
