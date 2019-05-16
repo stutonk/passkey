@@ -21,7 +21,7 @@ If no passphrase given, read from STDIN
 Options are:
 `
 	verFmt  = "%v version %v\n"
-	version = "1.1.0"
+	version = "1.1.1"
 )
 
 var (

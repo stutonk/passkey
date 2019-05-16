@@ -5,7 +5,7 @@ passed as an argument or any sequence of bytes when read from STDIN. The
 program will automatically generate a fresh 128-byte salt if one is not
 provided as an option. Keys are output as 64 hexadecimal characters (32
 bytes when using binary output) prepended to the salt that was used to
-generate them.
+generate them. The byte order of output is big-endian.
 
 ```
 usage: passkey [-h, -v] [-b] [-s salt] [passphrase]
