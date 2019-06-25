@@ -1,4 +1,4 @@
-.TH passkey 1 "14 May 2019" "version 1.1.0" "USER COMMANDS"
+.TH passkey 1 "25 June 2019" "version 1.2.0" "USER COMMANDS"
 .SH NAME
 passkey \- generate a cryptographic key from a passphrase
 .SH SYNOPSIS
@@ -9,13 +9,10 @@ passkey is a simple utility for generating cryptographic keys from a
 passphrase using the Argon2 algorithm. Passphrases may be any string when
 passed as an argument or any sequence of bytes when read from STDIN. The
 program will automatically generate a fresh 128-byte salt if one is not
-provided as an option. Keys are output as 64 hexadecimal characters (32
-bytes when using binary output) prepended to the salt that was used to
-generate them.
+provided as an option. Keys are output as 64 hexadecimal characters. The salt
+that was used to generate the key is output as 256 hexidecimal characters on
+the subsequent line.
 .SH OPTIONS
-.TP
-\-b, \-\-binary
-output in binary mode
 .TP
 \-h, \-\-help
 display help and exit
