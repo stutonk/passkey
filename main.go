@@ -16,17 +16,16 @@ import (
 const (
 	errFmt   = "%v: fatal; %v\n"
 	saltLen  = 128
-	usageFmt = `usage: %v [-h, -v] [-b] [-s salt] [passphrase]
+	usageFmt = `usage: %v [-h, -v] [-s salt] [passphrase]
 If no passphrase given, read from STDIN
 Options are:
 `
 	verFmt  = "%v version %v\n"
-	version = "1.1.0"
+	version = "1.2.0"
 )
 
 var (
 	appName  = os.Args[0]
-	binFlag  bool
 	helpFlag bool
 	saltFlag setString
 	verFlag  bool
@@ -58,13 +57,6 @@ func init() {
 		fmt.Println()
 	}
 
-	flag.BoolVarP(
-		&binFlag,
-		"binary",
-		"b",
-		false,
-		"output in binary mode",
-	)
 	flag.BoolVarP(
 		&helpFlag,
 		"help",
@@ -129,10 +121,6 @@ func main() {
 		}
 	}
 
-	output := append((*boxutil.Passkey(input, salt))[:], salt...)
-	if binFlag {
-		os.Stdout.Write(output)
-	} else {
-		fmt.Println(hex.EncodeToString(output))
-	}
+	fmt.Println(hex.EncodeToString((*boxutil.Passkey(input, salt))[:]))
+	fmt.Println(hex.EncodeToString(salt))
 }
