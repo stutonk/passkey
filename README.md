@@ -24,17 +24,3 @@ are available [here](https://github.com/stutonk/passkey/releases) for amd64/all 
 
 ### everybody else
 `go build`
-
-### license
-```
-##########
-###    ###
-##  ##  ##   To the extent possible under law,
-#  # ##  #   the authors have waived all copyright
-#  # ##  #   and related and neighboring rights to
-#  ## #  #   this work.  For more information, please see
-#  ## #  #   <https://creativecommons.org/publicdomain/zero/1.0/>.
-##  ##  ##
-###    ### 
-##########
-```
